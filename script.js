@@ -8,7 +8,15 @@
  const addTaskButton=document.querySelector("#addTaskButton");
 
 // console.log(task);
+//On DOMContentLoaded Get tasks if present from local storage
 document.addEventListener("DOMContentLoaded", getTasksFromLocalStorage);
+
+//Validate task text so that it not only contains special characters
+function validateTaskInput(taskText)
+{
+    let regex=/^(?=.*[A-Za-z0-9])[A-Za-z0-9\s\-_\.]*$/
+    return regex.test(taskText);
+}
 
 function validateTaskInLocalStorage(taskText)
 {
@@ -25,6 +33,7 @@ function validateTaskInLocalStorage(taskText)
     else
     return false;
 }
+//The Add button click event listner
 addTaskButton.addEventListener("click",function(e)
 {
     e.preventDefault();
@@ -38,9 +47,17 @@ addTaskButton.addEventListener("click",function(e)
     }
     //Validate to check if input task entered already matches with one in local storage then say it is duplicate reenter 
     let repeatTask=validateTaskInLocalStorage(inputTextTask.value)
+    //Check for the text validation in task text 
+    let inputValid= validateTaskInput(inputTextTask.value)
     if(repeatTask)
     {
         window.alert("The task already exists. Reneter new task");
+        inputTextTask.value="";
+        return;
+    }
+    if(!inputValid)
+    {
+        window.alert("Please reenter a valid task");
         inputTextTask.value="";
         return;
     }
@@ -54,6 +71,7 @@ addTaskButton.addEventListener("click",function(e)
    
 });
 
+//It will create a taskDiv and create DOM accordingly and wrap it in DocumentFragment
 function createTask(inputTask,retrieval,completed)
 {
     //console.log("Im called")
@@ -62,6 +80,7 @@ function createTask(inputTask,retrieval,completed)
     //Creating a newTaskDiv and adding Li to hit to hold task created text
     const newTaskDiv=document.createElement("div");
     newTaskDiv.classList.add("task");
+    //newTaskDiv.setAttribute("class","task");
     const taskLi=document.createElement("li")
     taskLi.textContent=inputTask; //Li will contain the task that is created
     //Adding tasks to local storage
@@ -87,7 +106,7 @@ function createTask(inputTask,retrieval,completed)
     newTaskDiv.appendChild(taskCompletedBtn);
     //Creating a delete button that can enable user delete a task
     const taskDeleteBtn=document.createElement("button");
-    taskDeleteBtn.innerHTML="<i class='fa-trash fa-solid'></li>"
+    taskDeleteBtn.innerHTML="<i class='fa-trash-can fa-solid'></li>"
     taskDeleteBtn.classList.add("deleteBtn");
     
     newTaskDiv.appendChild(taskDeleteBtn);
@@ -98,6 +117,7 @@ function createTask(inputTask,retrieval,completed)
 
 }
 
+//Save the tasks created to local storage
 function saveTaskToLocalStorage(task)
 {
     //localStorage.clear();
@@ -127,6 +147,7 @@ function saveTaskToLocalStorage(task)
 
     localStorage.setItem("tasks",JSON.stringify(tasks)); //Send tasks to local storage to save key here is tasks
 }
+
 //Whenever user deletes task from the list it should be deleted from local storage as well
 function deleteFromLocalStorage(task){
     console.log(task.childNodes[0].textContent);
@@ -150,6 +171,7 @@ function deleteFromLocalStorage(task){
     }
 
 }
+//On Document load call this function to get tasks from local storage
 function getTasksFromLocalStorage()
 {
     //localStorage.clear()
@@ -175,6 +197,7 @@ function getTasksFromLocalStorage()
     });
 
 }
+//EventListner to mark task as completed and delete task
 taskList.addEventListener("click",function(e)
 {
     e.preventDefault();
@@ -186,7 +209,7 @@ taskList.addEventListener("click",function(e)
             console.log("in")
             const taskItem=task.parentNode;
             console.log("Completed button item",task.previousElementSibling.textContent)
-            task.classList.toggle("completed");
+            //task.classList.toggle("completed");
             taskItem.classList.toggle("completed");
             taskItem.classList.toggle("task-text");
             //Update the local storage to mark flag as complted
@@ -217,15 +240,16 @@ taskList.addEventListener("click",function(e)
 //Add an event listner to the filter box
 taskListOptons.addEventListener("change",function(e)
 {
+    e.preventDefault();
     const tasks=taskList.childNodes;
     console.log(tasks);
     tasks.forEach(function(task){
         switch(e.target.value)
         {
-            case "all":
+            case "all":  //If all option selected show all tasks
                 task.style.display="flex";
                 break;
-            case "completed":
+            case "completed":  //Show completed if user selects complete option
                 if(task.classList.contains("completed"))
                 {
                     task.style.display="flex";
@@ -235,7 +259,7 @@ taskListOptons.addEventListener("change",function(e)
                     task.style.display="none";
                 }
                 break;
-            case "incomplete":
+            case "incomplete":  //if user selects shwo incomplete tasks
                 if(!task.classList.contains("completed"))  //Means it is incomplete then display else not 
                 {
                     task.style.display="flex";
@@ -249,39 +273,7 @@ taskListOptons.addEventListener("change",function(e)
     });
 });
 
-function filterTasks(e){
-    const tasks=taskList.childNodes;
-    tasks.forEach(function(task){
-        switch(e.target.value)
-        {
-            case "all":
-                task.style.display="flex";
-                break;
-            case "completed":
-                if(task.classList.contains("completed"))
-                {
-                    task.style.display="flex";
-                }
-                else
-                {
-                    task.style.display="none";
-                }
-                break;
-            case "incomplete":
-                if(!task.classList.contains("complete"))  //Means it is incomplete then display else not 
-                {
-                    task.style.display="flex";
-                }
-                else
-                {
-                task.style.display="none";
-                }
-                break;
-        }
-    });
-
-}
-
+//To store item in local storage update the task status to completed so to retrieve completed task we can read that value
 function updateTaskCompleteStatus(taskText,completed)
 {
     // Retrieve the tasks from localStorage
