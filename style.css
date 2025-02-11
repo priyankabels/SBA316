@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(99, 106, 200);
+    color:white;
+    min-height: 100vh;
+  }
+  header{
+    font-size:medium;
+  }
+  header,form{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+
+  }
+  form input,
+  form button{
+    padding: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.8rem;
+    border:none;
+    background: white;
+    /* border-radius:2rem */
+  
+  }
+  form button{
+    color:cadetblue;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3 ease;
+    margin-left: 0.5rem;
+  }
+  form button:hover{
+    color:white;
+    background:orange
+  }
+.fa-plus-circle{
+  margin-top: 0.3rem;
+  margin-left: -8px;
+}
+  .task-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    width: 100%;
+  }
+.task-list{
+  min-width: 35%;
+  list-style: none;
+}
+
+.task{
+  margin: 0.5rem;
+  padding-left: 0.5rem;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  transition: 0.5s;
+  font-size: small;
+  justify-content: space-between;
+}
+.task li{
+  flex:1
+}
+.deleteBtn,
+.completeBtn{
+  color: white;
+  border:none;
+  padding: 1rem;
+  cursor:pointer;
+  font-size: 1.5rem;
+}
+.completed, 
+.task-text {
+  font-weight: medium;
+  text-decoration: line-through;
+  color: black;
+  background: grey;
+}
+.header{
+  display: flex;
+  justify-content: center;
+}
+.completeBtn{
+  background: orange;
+}
+.deleteBtn{
+  background:grey;
+}
+.task-item{
+  padding: 0.5px;
+}
+.select{
+  
+  position: relative;
+  border-radius: none;
+  overflow: hidden;
+
+}
+select{
+  color: black;
+  width: 10rem;
+  height: 3.2rem;
+  cursor: pointer;
+  padding: 1rem;
+  margin: 1rem;
+  font-weight: medium;
+}
+select:hover{
+  color: white;
+  background:orange
+}
+  
+   .main{
+    display: flex;
+    width:100%;
+   }
