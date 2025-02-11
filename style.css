@@ -4,16 +4,30 @@ body {
     color:white;
     min-height: 100vh;
   }
-  header{
+  .header{
+    display: flex;
+    align-items: center;
     font-size:medium;
   }
-  header,form{
-
+  .header h1 {
+    display: flex;
+    align-items: right; 
+    margin-bottom: 5px;
+   
+  }
+  .header .fa-list-check{
+    margin-right: 20px;
+  }
+  
+  .header,form{
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 20vh;
 
+  }
+  form  input{
+    width: 35%;
   }
   form input,
   form button{
@@ -46,6 +60,7 @@ body {
     align-items: center;
     width: 100%;
   }
+  
   .container{
     display: flex;
     flex-direction: column;

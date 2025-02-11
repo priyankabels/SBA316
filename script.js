@@ -7,6 +7,7 @@
  const taskListOptons=document.querySelector("#taskListOptons"); //Filter Completed and Incompleted tasks Form control
  const addTaskButton=document.querySelector("#addTaskButton");
 
+
 // console.log(task);
 //On DOMContentLoaded Get tasks if present from local storage
 document.addEventListener("DOMContentLoaded", getTasksFromLocalStorage);
@@ -49,6 +50,12 @@ addTaskButton.addEventListener("click",function(e)
     let repeatTask=validateTaskInLocalStorage(inputTextTask.value)
     //Check for the text validation in task text 
     let inputValid= validateTaskInput(inputTextTask.value)
+    if(inputTextTask.value.length > 50)
+    {
+        window.alert("You have exceeded the task length limit..!");
+        inputTextTask.value="";
+        return;
+    }
     if(repeatTask)
     {
         window.alert("The task already exists. Reneter new task");
@@ -82,6 +89,7 @@ function createTask(inputTask,retrieval,completed)
     newTaskDiv.classList.add("task");
     //newTaskDiv.setAttribute("class","task");
     const taskLi=document.createElement("li")
+    taskLi.setAttribute("id",index);
     taskLi.textContent=inputTask; //Li will contain the task that is created
     //Adding tasks to local storage
     if(retrieval===false)
@@ -114,6 +122,7 @@ function createTask(inputTask,retrieval,completed)
     frag.appendChild(newTaskDiv);
     taskList.appendChild(frag); //Appending fragment to taskList that is ul
    // console.log(frag);
+   index++;
 
 }
 
@@ -171,6 +180,7 @@ function deleteFromLocalStorage(task){
     }
 
 }
+
 //On Document load call this function to get tasks from local storage
 function getTasksFromLocalStorage()
 {
